@@ -46,7 +46,30 @@ interface ProductTableProps {
 
 const ProductTable = React.memo(({ onChangeQuantity, storeId }: ProductTableProps) => {
   return (
-    <div>Product table</div>
+    <Query query={queries.getStore} skip={!storeId} variables={{ "storeId": storeId }}>
+      {({ data }: any) => {
+        //const products = data && data.store && data.store.products;
+        //console.table(products);
+        return (<Table>
+          <tbody>
+            {
+              data && data.store && data.store.products.map(({ description, id, name, price }: Product) => {
+                return <Tr key={id}>
+                  <td>
+                    <div>{name}</div>
+                    <Description>{description}</Description>
+                  </td>
+                  <PriceTd>€ {price.toFixed(2)}</PriceTd>
+
+                </Tr>
+              })
+            }
+          </tbody>
+        </Table>)
+      }
+
+      }
+    </Query >
   );
 });
 
