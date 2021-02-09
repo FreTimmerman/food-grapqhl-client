@@ -1,0 +1,18 @@
+query getStores{
+  stores{
+    id,
+    name
+  }
+}
+
+query getStore($storeId: String!){
+  store (id:$storeId){
+    id,
+    name,
+    city,
+    number,
+    postalCode,
+    street,
+    products {id,description,name,price}
+  }
+}

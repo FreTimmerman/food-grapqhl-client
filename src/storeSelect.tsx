@@ -25,7 +25,17 @@ const StoreSelect = React.memo(({ value, onChange }: StoreSelectProps) => {
   }, []);
 
   return (
-    <div>Store select</div>
+    <Query query={queries.getStores}>
+      {({ data: { stores = [] } = {} }) => (
+        <Select value={value} onChange={onChangeStore}>
+          <option key="default" value="">Select a store</option>
+          {stores.map(({ id, name }: Store) => {
+            return (<option key={id} value={id}>{name}</option>)
+          })}
+        </Select>
+      )}
+
+    </Query>
   );
 });
 
